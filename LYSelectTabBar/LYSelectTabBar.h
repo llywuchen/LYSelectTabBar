@@ -13,7 +13,7 @@
 @protocol LYSelectTabBarDelegate <NSObject>
 
 @optional
-- (BOOL)tabBar:(LYSelectTabBar *)tabBar willSelectButtonFrom:(NSInteger)from to:(NSInteger)to;
+- (void)tabBar:(LYSelectTabBar *)tabBar willSelectButtonFrom:(NSInteger)from to:(NSInteger)to;
 - (void)tabBar:(LYSelectTabBar *)tabBar didSelectButtonFrom:(NSInteger)from to:(NSInteger)to;
 
 @end

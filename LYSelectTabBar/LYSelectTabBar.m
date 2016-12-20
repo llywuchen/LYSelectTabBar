@@ -15,7 +15,9 @@
 @property (nonatomic,strong) NSArray *images;
 @property (nonatomic,strong) NSArray *selImages;
 @property (nonatomic,strong) NSMutableArray<LYSelectView *> *selectViewArray;
-@property (nonatomic, strong)   UIImageView *indicatorImageView;// 指示器
+@property (nonatomic,strong) UIImageView *indicatorImageView;// 指示器
+
+@property (nonatomic,strong) MASConstraint *animataConstraint;
 
 @end
 
@@ -84,7 +86,7 @@
         make.bottom.equalTo(self);
         make.height.equalTo(@(_indicatorHeight));
         make.width.equalTo(self).dividedBy(_selectViewArray.count);
-        make.centerX.equalTo(self).dividedBy(4);
+        self.animataConstraint = make.centerX.equalTo(self).dividedBy(4);
     }];
 }
 
@@ -100,20 +102,16 @@
 }
 
 - (void)setSelectedIndex:(NSInteger)index{
-    if(index == _currentIndex) return;
-    [self doSelectAcionAtIndex:_currentIndex];
+    NSInteger from = _currentIndex;
+    if(index == from) return;
     [self doSelectAcionAtIndex:index];
     _currentIndex = index;
+    if(from == -1) return;
+    [self doSelectAcionAtIndex:from];
     
     [self layoutIfNeeded];
-    [self.indicatorImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self);
-        make.height.equalTo(@(_indicatorHeight));
-        make.width.equalTo(self).dividedBy(_selectViewArray.count);
-        make.centerX.equalTo(self.mas_centerX).multipliedBy((_currentIndex*2.f+1.f)/4.f);
-    }];
-    
-    [UIView animateWithDuration:0.5 animations:^{
+    self.animataConstraint.centerOffset = CGPointMake(self.center.x*(_currentIndex*2.f)/4.f, self.indicatorImageView.center.y);
+    [UIView animateWithDuration:0.4 animations:^{
         [self layoutIfNeeded];
     }];
 }
