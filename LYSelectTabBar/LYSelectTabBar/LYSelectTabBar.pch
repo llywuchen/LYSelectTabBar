@@ -1,0 +1,21 @@
+//
+//  LYSelectTabBar.pch
+//  LYSelectTabBar
+//
+//  Created by lly on 16/12/19.
+//  Copyright © 2016年 franklin. All rights reserved.
+//
+
+#ifndef LYSelectTabBar_pch
+#define LYSelectTabBar_pch
+
+#ifdef __OBJC__
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
+#import <Masonry/Masonry.h>
+
+#endif
+
+#endif /* LYSelectTabBar_pch */
