@@ -16,6 +16,7 @@
 @property (nonatomic,strong) NSArray *selImages;
 @property (nonatomic,strong) NSMutableArray<LYSelectView *> *selectViewArray;
 @property (nonatomic,strong) UIImageView *indicatorImageView;// 指示器
+@property (nonatomic,strong) UIView *line;
 
 @property (nonatomic,strong) MASConstraint *animataConstraint;
 
@@ -32,7 +33,13 @@
         _indicatorImage = [UIImage imageNamed:indicatorImage];
         
         [self addTabButtonWithTitles:_titles imageArray:_images selImageArray:_selImages];
+        
+        _line = [[ UIView alloc]init];
+        _line.backgroundColor = [UIColor colorWithRed:229.f/255 green:229.f/255 blue:229.f/255 alpha:1.f];
+        [self addSubview:_line];
+        
         [self addSubview:self.indicatorImageView];
+        
         [self configureContraints];
         
         [self setSelectedIndex:0];
@@ -88,6 +95,11 @@
         make.width.equalTo(self).dividedBy(_selectViewArray.count);
         self.animataConstraint = make.centerX.equalTo(self).dividedBy(4);
     }];
+    
+    [_line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.left.right.equalTo(self);
+        make.height.equalTo(@1);
+    }];
 }
 
 #pragma mark -
@@ -119,6 +131,17 @@
 - (void)setFont:(UIFont *)font{
     _font = font;
     [self setTitleFontSize:font.pointSize];
+}
+
+- (void)setSelectedColor:(UIColor *)selectedColor{
+    for(LYSelectView *view in _selectViewArray){
+        [view.tabButton setTitleColor:selectedColor forState:UIControlStateSelected];
+    }
+}
+- (void)setUnSelectedColor:(UIColor *)unSelectedColor{
+    for(LYSelectView *view in _selectViewArray){
+        [view.tabButton setTitleColor:unSelectedColor forState:UIControlStateNormal];
+    }
 }
 #pragma mark -
 #pragma mark -animation

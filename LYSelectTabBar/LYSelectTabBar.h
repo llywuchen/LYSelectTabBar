@@ -45,7 +45,7 @@
  *  @param badgeValue 字符串类型的数值
  *  @param index      位置
  */
-- (void)setBadgeValue:(NSString *)badgeValue atIndex:(NSInteger)index;
+//- (void)setBadgeValue:(NSString *)badgeValue atIndex:(NSInteger)index;
 
 /**
  *  用来手动设置点击的按钮的位置
