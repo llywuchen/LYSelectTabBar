@@ -116,6 +116,10 @@
     }];
 }
 
+- (void)setFont:(UIFont *)font{
+    _font = font;
+    [self setTitleFontSize:font.pointSize];
+}
 #pragma mark -
 #pragma mark -animation
 - (void)setButtonImageAlpha:(CGFloat)alpha{
