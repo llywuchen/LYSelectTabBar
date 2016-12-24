@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger,LYTabBatAssistBtnStatus){
+    LYTabBatAssistBtn_Desc = 0 ,
+    LYTabBatAssistBtn_Asc,
+    LYTabBatAssistBtn_Nomal
+};
+
 @interface LYSelectView : UIView
 
 @property (nonatomic,strong,readonly) UIButton *tabImageBtn;
@@ -19,6 +25,8 @@
 @property (nonatomic,assign,readonly) BOOL isSelected;
 @property (nonatomic,assign) BOOL hasOrderImage;
 
+@property (nonatomic,assign) int assistStatus;
+
 - (instancetype)initWithTitle:(NSString *)title font:(UIFont *)font
                      selImage:(UIImage *)selImage unSelImage:(UIImage *)unSelImage
                      selColor:(UIColor *)selColor unSelColor:(UIColor *)unSelColor;
@@ -26,6 +34,9 @@
 - (void)setOrderImage:(NSString *)image isLeft:(BOOL)isLeft;
 - (void)setBadgeValue:(NSString *)badgeValue;
 - (void)doSelectAction;
+- (void)doAssistAction;
+
+- (void)addAssist:(NSString *)normalImage descImage:(NSString *)descImage ascImage:(NSString *)ascImage;
 
 //- (void)addActionTarget:(id)target sel:(SEL)sel;
 

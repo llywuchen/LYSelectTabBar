@@ -10,11 +10,17 @@
 
 @class LYSelectTabBar;
 
+typedef NS_ENUM(NSInteger,LYTabBatAssistStatus){
+    LYTabBatAssist_Desc = 0,
+    LYTabBatAssist_Asc,
+    LYTabBatAssist_Nomal
+};
+
 @protocol LYSelectTabBarDelegate <NSObject>
 
 @optional
-- (void)tabBar:(LYSelectTabBar *)tabBar willSelectButtonFrom:(NSInteger)from to:(NSInteger)to;
-- (void)tabBar:(LYSelectTabBar *)tabBar didSelectButtonFrom:(NSInteger)from to:(NSInteger)to;
+- (void)tabBar:(LYSelectTabBar *)tabBar willSelectButtonFrom:(NSInteger)from to:(NSInteger)to toAssistStatus:(LYTabBatAssistStatus)status;
+- (void)tabBar:(LYSelectTabBar *)tabBar didSelectButtonFrom:(NSInteger)from to:(NSInteger)to toAssistStatus:(LYTabBatAssistStatus)status;
 
 @end
 
@@ -34,11 +40,18 @@
 
 @property (nonatomic,assign) BOOL animate;
 
+- (instancetype)initTitles:(NSArray *)titles images:(NSArray *)images selectImages:(NSArray *)selectImages indicatorImage:(NSString *)indicatorImage;
+
+/**
+ *  用来手动设置点击的按钮的位置
+ */
+- (void)setSelectedIndex:(NSInteger)index;
 
 - (void)setButtonImageAlpha:(CGFloat)alpha;
 - (void)setTitleFontSize:(CGFloat)size;
 - (void)setTitleOffset:(CGFloat)offset;
 
+- (void)addTabButtonAssistAtIndex:(NSInteger)index normalImage:(NSString *)normalImage descImage:(NSString *)descImage ascImage:(NSString *)ascImage;
 /**
  *  设置某个tab的badge value
  *
@@ -47,11 +60,6 @@
  */
 //- (void)setBadgeValue:(NSString *)badgeValue atIndex:(NSInteger)index;
 
-/**
- *  用来手动设置点击的按钮的位置
- */
-- (void)setSelectedIndex:(NSInteger)index;
 
-- (instancetype)initTitles:(NSArray *)titles images:(NSArray *)images selectImages:(NSArray *)selectImages indicatorImage:(NSString *)indicatorImage;
 
 @end

@@ -115,8 +115,12 @@
 
 - (void)setSelectedIndex:(NSInteger)index{
     NSInteger from = _currentIndex;
-    if(index == from) return;
-    [self doSelectAcionAtIndex:index];
+    if(index == from) {
+        [self doAssistAcionAtIndex:index];
+        return;
+    }else{
+        [self doSelectAcionAtIndex:index];
+    }
     _currentIndex = index;
     if(from == -1) return;
     [self doSelectAcionAtIndex:from];
@@ -142,6 +146,18 @@
     for(LYSelectView *view in _selectViewArray){
         [view.tabButton setTitleColor:unSelectedColor forState:UIControlStateNormal];
     }
+}
+
+- (void)setIndicatorHeight:(CGFloat)indicatorHeight{
+    _indicatorHeight = indicatorHeight;
+    [_indicatorImageView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@(_indicatorHeight));
+    }];
+}
+
+- (void)addTabButtonAssistAtIndex:(NSInteger)index normalImage:(NSString *)normalImage descImage:(NSString *)descImage ascImage:(NSString *)ascImage{
+    LYSelectView *view = _selectViewArray[index];
+    [view addAssist:normalImage descImage:descImage ascImage:ascImage];
 }
 #pragma mark -
 #pragma mark -animation
@@ -169,14 +185,21 @@
 #pragma mark - action
 - (void)selectViewTapAction:(UIGestureRecognizer *)sender{
     NSInteger from = _currentIndex;
-    NSInteger index = sender.view.tag;
-    if(self.delegate&&[self.delegate respondsToSelector:@selector(tabBar:willSelectButtonFrom:to:)]){
-        [self.delegate tabBar:self willSelectButtonFrom:from to:index];
+    LYSelectView *view = (LYSelectView *)sender.view;
+    NSInteger index = view.tag;
+    if(self.delegate&&[self.delegate respondsToSelector:@selector(tabBar:willSelectButtonFrom:to:toAssistStatus:)]){
+        [self.delegate tabBar:self willSelectButtonFrom:from to:index toAssistStatus:view.assistStatus];
     }
     [self setSelectedIndex:index];
-    if(self.delegate&&[self.delegate respondsToSelector:@selector(tabBar:didSelectButtonFrom:to:)]){
-        [self.delegate tabBar:self didSelectButtonFrom:from to:index];
+    if(self.delegate&&[self.delegate respondsToSelector:@selector(tabBar:didSelectButtonFrom:to:toAssistStatus:)]){
+        [self.delegate tabBar:self didSelectButtonFrom:from to:index toAssistStatus:view.assistStatus];
     }
+}
+
+- (void)doAssistAcionAtIndex:(NSInteger)index{
+    if(index<0||index>=_selectViewArray.count) return;
+    LYSelectView *view = _selectViewArray[index];
+    [view doAssistAction];
 }
 
 - (void)doSelectAcionAtIndex:(NSInteger)index{

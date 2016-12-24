@@ -10,14 +10,12 @@
 
 @interface LYSelectView ()
 
-//@property (nonatomic,strong) UIButton *tabImageBtn;
-//
-//@property (nonatomic,strong) UIButton *tabButton;
-//
-//@property (nonatomic,strong) UILabel *badgeLabel;
+@property (nonatomic,strong) NSString *normalImage;
+@property (nonatomic,strong) NSString *descImage;
+@property (nonatomic,strong) NSString *ascImage;
 
 @property (nonatomic,assign) BOOL showTabImage;
-
+@property (nonatomic,assign) BOOL needAssistLayout;
 @end
 
 @implementation LYSelectView
@@ -49,17 +47,29 @@
 
 - (void)configureContraints{
     [_tabImageBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.equalTo(@0);
+        make.top.centerX.equalTo(self);
         make.width.equalTo(self.mas_width);
         make.height.equalTo(self).multipliedBy(_showTabImage?(0.66f):0);
     }];
     [_tabButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(@0);
-        make.bottom.equalTo(self).offset(-10);
+        make.centerX.equalTo(self);
+        make.bottom.equalTo(self).offset(_showTabImage?-10:0);
         make.top.equalTo(_tabImageBtn.mas_bottom);
     }];
 }
 
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    if(_needAssistLayout){
+        _needAssistLayout = false;
+        CGFloat imgWidth = self.tabButton.currentImage.size.width;
+        CGFloat titleWidth = self.tabButton.frame.size.width - imgWidth - 6;
+//        self.tabButton.imageEdgeInsets = UIEdgeInsetsMake(0, -imgWidth/2, 0, imgWidth/2);
+//        self.tabButton.titleEdgeInsets = UIEdgeInsetsMake(3, titleWidth +3 , 3, -(titleWidth +3));
+        self.tabButton.titleEdgeInsets = UIEdgeInsetsMake(0, -6 , 0, 0);
+        self.tabButton.imageEdgeInsets = UIEdgeInsetsMake(0, titleWidth +imgWidth+6, 0, -6);
+    }
+}
 #pragma mark -
 #pragma mark - getter and setter
 - (BOOL)isSelected{
@@ -79,11 +89,44 @@
     
 }
 
+- (void)setAssistStatus:(int)assistStatus{
+    if(assistStatus == LYTabBatAssistBtn_Nomal){
+        [self.tabButton setImage:[UIImage imageNamed:_normalImage] forState:UIControlStateNormal];
+        [self.tabButton setImage:[UIImage imageNamed:_normalImage] forState:UIControlStateSelected];
+    }else{
+        _assistStatus = assistStatus;
+        [self.tabButton setImage:[UIImage imageNamed:_assistStatus== LYTabBatAssistBtn_Desc? _descImage:_ascImage] forState:UIControlStateNormal];
+        [self.tabButton setImage:[UIImage imageNamed:_assistStatus== LYTabBatAssistBtn_Desc? _descImage:_ascImage] forState:UIControlStateSelected];
+    }
+}
+
 #pragma mark -
 #pragma mark - action
+- (void)addAssist:(NSString *)normalImage descImage:(NSString *)descImage ascImage:(NSString *)ascImage{
+    _normalImage = normalImage;
+    _descImage = descImage;
+    _ascImage = ascImage;
+    _needAssistLayout = YES;
+    self.assistStatus = LYTabBatAssistBtn_Nomal;
+    [self setNeedsLayout];
+}
+
 - (void)doSelectAction{
+    if(self.normalImage.length>0){
+        if(!_tabButton.isSelected){
+            self.assistStatus = _assistStatus;
+        }else{
+            self.assistStatus = LYTabBatAssistBtn_Nomal;
+        }
+    }
     [_tabButton setSelected:!_tabButton.isSelected];
     [_tabImageBtn setSelected:!_tabImageBtn.isSelected];
+}
+
+- (void)doAssistAction{
+    if(self.normalImage.length>0){
+        self.assistStatus = _assistStatus!= LYTabBatAssistBtn_Desc?LYTabBatAssistBtn_Desc:LYTabBatAssistBtn_Asc;
+    }
 }
 
 //- (void)setSelected:(BOOL)selected{
