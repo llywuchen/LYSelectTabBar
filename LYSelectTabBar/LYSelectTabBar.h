@@ -34,15 +34,10 @@
 
 @property (nonatomic,assign) BOOL animate;
 
-///**
-// *  根据标题添加内部按钮 单个
-// */
-//- (void)addTabButtonWithTitle:(NSString *)title image:(UIImage *)image selImage:(UIImage *)selImage;
-///**
-// *  根据标题添加内部按钮 多个
-// */
-//- (void)addTabButtonWithTitles:(NSArray<NSString *> *)titles imageArray:(NSArray *)imageArray selImageArray:(NSArray *)selImageArray;
 
+- (void)setButtonImageAlpha:(CGFloat)alpha;
+- (void)setTitleFontSize:(CGFloat)size;
+- (void)setTitleOffset:(CGFloat)offset;
 
 /**
  *  设置某个tab的badge value

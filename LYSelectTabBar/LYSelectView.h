@@ -10,6 +10,12 @@
 
 @interface LYSelectView : UIView
 
+@property (nonatomic,strong,readonly) UIButton *tabImageBtn;
+
+@property (nonatomic,strong,readonly) UIButton *tabButton;
+
+@property (nonatomic,strong,readonly) UILabel *badgeLabel;
+
 @property (nonatomic,assign,readonly) BOOL isSelected;
 @property (nonatomic,assign) BOOL hasOrderImage;
 

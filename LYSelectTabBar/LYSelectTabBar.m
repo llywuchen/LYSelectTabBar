@@ -117,6 +117,28 @@
 }
 
 #pragma mark -
+#pragma mark -animation
+- (void)setButtonImageAlpha:(CGFloat)alpha{
+    for(LYSelectView *view in _selectViewArray){
+        view.tabImageBtn.alpha = alpha;
+    }
+}
+
+- (void)setTitleFontSize:(CGFloat)size{
+    for(LYSelectView *view in _selectViewArray){
+        view.tabButton.titleLabel.font = [UIFont systemFontOfSize:size];
+    }
+}
+
+- (void)setTitleOffset:(CGFloat)offset{
+    for(LYSelectView *view in _selectViewArray){
+        [view.tabButton mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(view).offset(-10-offset);
+        }];
+    }
+}
+
+#pragma mark -
 #pragma mark - action
 - (void)selectViewTapAction:(UIGestureRecognizer *)sender{
     NSInteger from = _currentIndex;

@@ -10,11 +10,11 @@
 
 @interface LYSelectView ()
 
-@property (nonatomic,strong) UIButton *tabImageBtn;
-
-@property (nonatomic,strong) UIButton *tabButton;
-
-@property (nonatomic,strong) UILabel *badgeLabel;
+//@property (nonatomic,strong) UIButton *tabImageBtn;
+//
+//@property (nonatomic,strong) UIButton *tabButton;
+//
+//@property (nonatomic,strong) UILabel *badgeLabel;
 
 @property (nonatomic,assign) BOOL showTabImage;
 
@@ -54,7 +54,8 @@
         make.height.equalTo(self).multipliedBy(_showTabImage?(0.66f):0);
     }];
     [_tabButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.equalTo(@0);
+        make.left.right.equalTo(@0);
+        make.bottom.equalTo(self).offset(-10);
         make.top.equalTo(_tabImageBtn.mas_bottom);
     }];
 }
