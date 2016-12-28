@@ -93,7 +93,7 @@
         make.bottom.equalTo(self);
         make.height.equalTo(@(_indicatorHeight));
         make.width.equalTo(self).dividedBy(_selectViewArray.count);
-        self.animataConstraint = make.centerX.equalTo(self).dividedBy(4);
+        self.animataConstraint = make.centerX.equalTo(self).dividedBy(_selectViewArray.count);
     }];
     
     [_line mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -126,7 +126,7 @@
     [self doSelectAcionAtIndex:from];
     
     [self layoutIfNeeded];
-    self.animataConstraint.centerOffset = CGPointMake(self.center.x*(_currentIndex*2.f)/4.f, self.indicatorImageView.center.y);
+    self.animataConstraint.centerOffset = CGPointMake(self.center.x*(_currentIndex*2.f)/_selectViewArray.count, self.indicatorImageView.center.y);
     [UIView animateWithDuration:0.4 animations:^{
         [self layoutIfNeeded];
     }];

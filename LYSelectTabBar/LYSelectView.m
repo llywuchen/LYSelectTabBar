@@ -64,8 +64,6 @@
         _needAssistLayout = false;
         CGFloat imgWidth = self.tabButton.currentImage.size.width;
         CGFloat titleWidth = self.tabButton.frame.size.width - imgWidth - 6;
-//        self.tabButton.imageEdgeInsets = UIEdgeInsetsMake(0, -imgWidth/2, 0, imgWidth/2);
-//        self.tabButton.titleEdgeInsets = UIEdgeInsetsMake(3, titleWidth +3 , 3, -(titleWidth +3));
         self.tabButton.titleEdgeInsets = UIEdgeInsetsMake(0, -6 , 0, 0);
         self.tabButton.imageEdgeInsets = UIEdgeInsetsMake(0, titleWidth +imgWidth+6, 0, -6);
     }
@@ -127,17 +125,6 @@
     if(self.normalImage.length>0){
         self.assistStatus = _assistStatus!= LYTabBatAssistBtn_Desc?LYTabBatAssistBtn_Desc:LYTabBatAssistBtn_Asc;
     }
-}
-
-//- (void)setSelected:(BOOL)selected{
-//    [_tabButton setSelected:selected];
-//    [_tabImageBtn setSelected:selected];
-//}
-
-- (void)addActionTarget:(id)target sel:(SEL)sel{
-    [self setclickEnable:YES];
-    [_tabButton addTarget:target action:sel forControlEvents:UIControlEventTouchUpInside];
-    [_tabImageBtn addTarget:target action:sel forControlEvents:UIControlEventTouchUpInside];
 }
 
 @end

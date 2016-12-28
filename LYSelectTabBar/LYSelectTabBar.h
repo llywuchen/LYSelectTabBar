@@ -42,11 +42,8 @@ typedef NS_ENUM(NSInteger,LYTabBatAssistStatus){
 
 - (instancetype)initTitles:(NSArray *)titles images:(NSArray *)images selectImages:(NSArray *)selectImages indicatorImage:(NSString *)indicatorImage;
 
-/**
- *  用来手动设置点击的按钮的位置
- */
-- (void)setSelectedIndex:(NSInteger)index;
 
+- (void)setSelectedIndex:(NSInteger)index;
 - (void)setButtonImageAlpha:(CGFloat)alpha;
 - (void)setTitleFontSize:(CGFloat)size;
 - (void)setTitleOffset:(CGFloat)offset;
